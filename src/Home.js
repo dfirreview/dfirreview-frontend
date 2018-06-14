@@ -11,13 +11,8 @@ import {
   Segment,
 } from 'semantic-ui-react';
 
-import MainMenu from './MainMenu.js';
-import Footer from './Footer.js';
-
 const HomeHeader = () => (
   <div>
-    <MainMenu />
-
     <Segment padded='very' inverted vertical textAlign='center'>
       <Container text>
 
@@ -35,15 +30,14 @@ const HomeHeader = () => (
 
       </Container>
     </Segment>
-
   </div >
 );
 
 const Home = () => (
-  <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column', }}>
+  <div>
     <HomeHeader />
 
-    <Segment vertical style={{ fontSize: '1.5em', flex: 1 }}>
+    <Segment vertical style={{ fontSize: '1.5em' }}>
       <Container textAlign='justified' style={{ hyphens: 'none' }}>
         <Grid doubling columns={2} celled='internally' relaxed>
           <Grid.Row id='content'>
@@ -66,7 +60,7 @@ const Home = () => (
               </p>
               <br />
               <center>
-                <Button as={HashLink} to='#get-involved' icon size='huge' labelPosition='right'>
+                <Button as={HashLink} to='#get-involved' icon size='huge' positive labelPosition='right'>
                   Get Involved <Icon name='arrow down' />
                 </Button>
               </center>
@@ -119,9 +113,6 @@ const Home = () => (
         </Grid>
       </Container>
     </Segment>
-
-    <Footer />
-
   </div >
 );
 

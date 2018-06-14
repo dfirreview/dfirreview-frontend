@@ -25,8 +25,7 @@ import {
 } from 'semantic-ui-react';
 
 const NotFound = () => (
-    <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column', }}>
-        <MainMenu />
+    <div>
         <Segment padded='very' vertical inverted textAlign='center'>
             <Icon name='exclamation triangle' size='huge' color='yellow' />
             <Header inverted>Oops! Something went wrong!</Header>
@@ -42,7 +41,6 @@ const NotFound = () => (
                 />
             </Container>
         </Segment>
-        <Footer />
     </div>
 );
 
@@ -67,16 +65,20 @@ const BugButton = () => (
 );
 
 render(
-    <div>
-        <BugButton />
-        <Router>
-            <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/donate" component={Donate} />
-                <Route component={NotFound} status={404} />
-            </Switch>
-        </Router>
-    </div>
+    <Router>
+        <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column', }}>
+            <BugButton />
+            <MainMenu />
+            <div style={{ flex: 1 }}>
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/donate" component={Donate} />
+                    <Route component={NotFound} status={404} />
+                </Switch>
+            </div>
+            <Footer />
+        </div>
+    </Router>
     , document.getElementById('root')
 );
 

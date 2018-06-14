@@ -3,8 +3,6 @@ import React from 'react';
 import S from './common.js'
 import config from './config.js'
 
-import MainMenu from './MainMenu.js';
-import Footer from './Footer.js'
 import { HashLink } from 'react-router-hash-link'
 
 import {
@@ -17,8 +15,7 @@ import {
 } from 'semantic-ui-react';
 
 const Donate = () => (
-    <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column', }}>
-        <MainMenu />
+    <div>
         <Segment vertical inverted padded='very'>
             <Container text textAlign='justified' style={{ hyphens: 'none', fontSize: '1.5em' }}>
                 <Header size='large' inverted textAlign='center' content='Thank you for considering a donation to DFIR Review!' />
@@ -79,8 +76,6 @@ const Donate = () => (
                 </Segment.Group>
             </Container>
         </Segment>
-
-        <Footer />
     </div >
 )
 
