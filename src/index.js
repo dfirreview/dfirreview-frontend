@@ -15,10 +15,12 @@ import {
 } from 'react-router-dom';
 
 import {
+    Button,
     Container,
     Header,
     Icon,
     Message,
+    Popup,
     Segment,
 } from 'semantic-ui-react';
 
@@ -44,8 +46,29 @@ const NotFound = () => (
     </div>
 );
 
+const BugButton = () => (
+    <Popup content='Report a Bug' trigger={
+        <Button
+            as='a'
+            href='https://github.com/dfirreview/dfirreview-frontend/issues'
+            negative
+            icon='bug'
+            circular
+            floated
+            style={{
+                position: 'fixed',
+                right: '10px',
+                bottom: '10px',
+                zIndex: '1'
+            }}
+            data-content='Report a Bug'
+        />
+    } />
+);
+
 render(
-    (
+    <div>
+        <BugButton />
         <Router>
             <Switch>
                 <Route exact path="/" component={Home} />
@@ -53,6 +76,7 @@ render(
                 <Route component={NotFound} status={404} />
             </Switch>
         </Router>
-    ), document.getElementById('root')
+    </div>
+    , document.getElementById('root')
 );
 
