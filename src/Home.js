@@ -21,7 +21,7 @@ const HomeHeader = () => (
         <Header size='large' inverted content='Peer Reviewed Community-Driven Research' />
 
         <p style={{ fontSize: '1.25em' }}>
-          DFIR Review is an experimental platform that is intended to help promote repeatable and verifyable Digital Forensics and Incident Response research.
+          DFIR Review is an experimental platform that is intended to help promote repeatable and verifiable Digital Forensics and Incident Response research.
         </p>
 
         <Button as={HashLink} to="#content" icon primary size='big'>
@@ -53,7 +53,7 @@ const Home = () => (
             <Grid.Column>
               <Header size='large' textAlign='center' content="Our Solution" />
               <p>
-                <S>DFIR Research is an experimental, community-driven platform for the validation, review, and publication of digital forensics and incident response research.</S> <S>The platform aims to assest researchers in identifying novel contributions to the field that lack sufficient peer review and validation.</S> <S>Researchers are encouraged to validate the work of others by repeating claimed experiments and publishing their findings.</S> <S>Technical and copy editors will review submissions, and accepted work will be published and made freely available.</S>
+                <S>DFIR Research is an experimental, community-driven platform for the validation, review, and publication of digital forensics and incident response research.</S> <S>The platform aims to assist researchers in identifying novel contributions to the field that lack sufficient peer review and validation.</S> <S>Researchers are encouraged to validate the work of others by repeating claimed experiments and publishing their findings.</S> <S>Technical and copy editors will review submissions, and accepted work will be published and made freely available.</S>
               </p>
               <p>
                 <S>Researchers, reviewers, and editors will be rewarded monetarily from a donation-driven community fund.</S>
@@ -92,7 +92,7 @@ const Home = () => (
                 <Grid.Column>
                   <Header attached='top' block content='Review' textAlign='center' />
                   <Segment attached style={{ fontSize: '1em' }}>
-                    <p>Sign up to review submissions for technical content and quality.</p>
+                    <p>Apply to review submissions for technical content and quality.</p>
                     <center>
                       <Button primary disabled size='big' content='Coming Soon' />
                     </center>
