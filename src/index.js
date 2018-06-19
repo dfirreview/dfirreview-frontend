@@ -3,8 +3,10 @@ import { render } from 'react-snapshot';
 
 import 'semantic-ui-css/semantic.min.css';
 
+import Apply from "./Apply.js"
 import Donate from './Donate.js'
 import Home from './Home.js';
+
 import MainMenu from './MainMenu.js';
 import Footer from './Footer.js'
 
@@ -52,7 +54,6 @@ const BugButton = () => (
             negative
             icon='bug'
             circular
-            floated
             style={{
                 position: 'fixed',
                 right: '10px',
@@ -69,9 +70,10 @@ render(
         <div style={{ display: 'flex', minHeight: '100vh', flexDirection: 'column', }}>
             <BugButton />
             <MainMenu />
-            <div style={{ flex: 1 }}>
+            <div id="main-content" style={{ flex: 1 }}>
                 <Switch>
                     <Route exact path="/" component={Home} />
+                    <Route exact path="/apply" component={Apply} />
                     <Route exact path="/donate" component={Donate} />
                     <Route component={NotFound} status={404} />
                 </Switch>

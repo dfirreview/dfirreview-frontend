@@ -10,5 +10,6 @@ const config = (process.env.NODE_ENV === 'production') ? prod : dev;
 
 export default {
     COINBASE_COMMERCE_URL: "https://commerce.coinbase.com/checkout/31d28fb6-22aa-47ea-8399-362e34c9ee3d",
+    RECAPTCHA_CLIENT_SITEKEY: "6LfdSl8UAAAAADLVSjK-Q3lej66dNCNyR0nHbQ8O",
     ...config
 };

@@ -94,7 +94,7 @@ const Home = () => (
                   <Segment attached style={{ fontSize: '1em' }}>
                     <p>Apply to review submissions for technical content and quality.</p>
                     <center>
-                      <Button primary disabled size='big' content='Coming Soon' />
+                      <Button primary as='a' href='/apply' size='big' content='Apply' />
                     </center>
                   </Segment>
                 </Grid.Column>

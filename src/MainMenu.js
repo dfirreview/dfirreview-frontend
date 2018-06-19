@@ -22,6 +22,7 @@ const MainMenu = () => (
                 size='large'
             >
                 <Menu.Item as={NavLink} exact to='/' content='Home' />
+                <Menu.Item as={NavLink} exact to='/apply' content='Reviewer Application' />
                 <Menu.Item as={Link} to='/donate' position='right'>
                     <Button icon inverted>
                         Donate <Icon name='gift' />
