@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {
     Container,
     Icon,
+    Image,
     Label,
     Segment,
     Tab,
@@ -12,15 +13,17 @@ import {
 
 import codemirror from 'codemirror';
 import 'codemirror/mode/gfm/gfm';
-import 'codemirror/addon/display/placeholder'
+import 'codemirror/addon/display/placeholder';
 import 'codemirror/lib/codemirror.css';
 
 import stateFromHTML from 'draft-js-import-html/lib/stateFromHTML';
 import stateToMarkdown from 'draft-js-export-markdown/lib/stateToMarkdown';
 
-import './MarkdownTest.css'
+import './MarkdownTest.css';
 
 import Markdown from 'react-markdown';
+
+import breaks from 'remark-breaks';
 
 class MarkdownEditor extends React.PureComponent {
     static propTypes = {
@@ -47,6 +50,7 @@ class MarkdownEditor extends React.PureComponent {
                 if (this.state.pasted !== null) {
                     change.cancel()
                     e.doc.replaceRange(this.state.pasted, change.from, change.to)
+                    this.setState({ pasted: null })
                 }
             }
         })
@@ -85,6 +89,7 @@ class MarkdownTest extends React.PureComponent {
     renderers = {
         root: Container,
         table: (props) => <Table celled>{props.children}</Table>,
+        image: Image,
     }
 
 
@@ -111,7 +116,7 @@ class MarkdownTest extends React.PureComponent {
     preview = () => (
         <Tab.Pane attached='top'>
             <Label attached='top'><Icon name='file alternate' />Preview</Label>
-            <Markdown source={this.state.markdown} renderers={this.renderers} />
+            <Markdown source={this.state.markdown} renderers={this.renderers} plugins={[breaks]} />
         </Tab.Pane>
     )
 

@@ -7,13 +7,14 @@
     "draft-js": "^0.10.5",
     "draft-js-export-markdown": "^1.2.0",
     "draft-js-import-html": "^1.2.1",
-    "prop-types": "^15.6.1",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
     "react-markdown": "^3.3.4",
     "react-router-dom": "^4.3.1",
     "react-router-hash-link": "^1.2.0",
-    "semantic-ui-css": "^2.3.1",
+    "remark-breaks": "^1.0.0",
+    "semantic-ui-css": "^2.3.2",
     "semantic-ui-react": "^0.81.1"
   },
   "scripts": {
