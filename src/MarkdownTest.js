@@ -95,7 +95,7 @@ class MarkdownTest extends React.PureComponent {
 
 
     renderers = {
-        root: Container,
+        root: (props) => <Container textAlign='justified' style={{ hyphens: 'none' }}>{props.children}</Container>,
         table: (props) => <Table celled>{props.children}</Table>,
         image: Image,
     }
