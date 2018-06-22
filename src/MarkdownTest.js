@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-    Container,
     Icon,
     Image,
     Label,
     Segment,
-    Tab,
     Table,
+    Grid,
 } from 'semantic-ui-react';
 
 import codemirror from 'codemirror';
@@ -24,6 +23,7 @@ import './MarkdownTest.css';
 import Markdown from 'react-markdown';
 
 import breaks from 'remark-breaks';
+import Sticky from 'react-sticky-box';
 
 const placeholderText = `This editor supports Github Flavored Markdown.  Click the banner above for more details.
     
@@ -36,7 +36,7 @@ Known Issues:
 class MarkdownEditor extends React.PureComponent {
     static propTypes = {
         content: PropTypes.string,
-        onBlur: PropTypes.func,
+        onChange: PropTypes.func,
     }
 
     componentDidMount() {
@@ -52,7 +52,7 @@ class MarkdownEditor extends React.PureComponent {
             placeholder: placeholderText,
         });
 
-        this.editor.on('blur', this.props.onBlur);
+        this.editor.on('change', this.props.onChange);
         this.editor.on('beforeChange', (e, change) => {
             if (change.origin === "paste") {
                 if (this.state.pasted !== null) {
@@ -95,15 +95,23 @@ class MarkdownTest extends React.PureComponent {
 
 
     renderers = {
-        root: (props) => <Container textAlign='justified' style={{ hyphens: 'none' }}>{props.children}</Container>,
+        root: (props) => (
+            <Segment
+                vertical
+                textAlign='justified'
+                style={{ textAlign: 'justify', hyphens: 'none' }}
+            >
+                {props.children}
+            </Segment>
+        ),
         table: (props) => <Table celled>{props.children}</Table>,
-        image: Image,
+        image: (props) => <Image as='a' href={props.src} src={props.src} target='_blank' />,
     }
 
 
     editor = () => (
-        <Tab.Pane attached='top'>
-            <Container>
+        <Sticky>
+            <Segment>
                 <Label
                     as='a'
                     href='https://guides.github.com/features/mastering-markdown/'
@@ -112,32 +120,29 @@ class MarkdownTest extends React.PureComponent {
                 >
                     <Icon name='code' /> Markdown
                 </Label>
-                <MarkdownEditor content={this.state.markdown} onBlur={
+                <MarkdownEditor content={this.state.markdown} onChange={
                     (e) => {
                         this.setState({ markdown: e.getValue() })
                     }
                 } />
-            </Container>
-        </Tab.Pane>
+            </Segment>
+        </Sticky>
+
     )
 
     preview = () => (
-        <Tab.Pane attached='top'>
+        <Segment>
             <Label attached='top'><Icon name='file alternate' />Preview</Label>
             <Markdown source={this.state.markdown} renderers={this.renderers} plugins={[breaks]} />
-        </Tab.Pane>
+        </Segment>
     )
 
     render = () => (
         <Segment vertical attached>
-            <Container>
-                <Tab panes={[
-                    { menuItem: 'Edit', render: this.editor },
-                    { menuItem: 'Preview', render: this.preview },
-                ]}
-                    menu={{ attached: 'bottom' }}
-                />
-            </Container>
+            <Grid padded doubling columns={2}>
+                <Grid.Column ><this.editor /></Grid.Column>
+                <Grid.Column><this.preview /></Grid.Column>
+            </Grid>
         </Segment>
     )
 }
