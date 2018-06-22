@@ -15,6 +15,9 @@ import 'codemirror/mode/gfm/gfm';
 import 'codemirror/addon/display/placeholder'
 import 'codemirror/lib/codemirror.css';
 
+import stateFromHTML from 'draft-js-import-html/lib/stateFromHTML';
+import stateToMarkdown from 'draft-js-export-markdown/lib/stateToMarkdown';
+
 import './MarkdownTest.css'
 
 import Markdown from 'react-markdown';
@@ -24,6 +27,7 @@ class MarkdownEditor extends React.PureComponent {
         content: PropTypes.string,
         onBlur: PropTypes.func,
     }
+
     componentDidMount() {
         // code mirror setup
         this.editor = codemirror.fromTextArea(this.refEditor, {
@@ -34,10 +38,28 @@ class MarkdownEditor extends React.PureComponent {
             matchBrackets: true,
             lineWrapping: true,
             tabSize: 2,
-            placeholder: "This editor supports Github Flavored Markdown.  Click the banner above for more details.",
+            placeholder: "This editor supports Github Flavored Markdown.  Click the banner above for more details.\n\nYou can also paste in content and it will attempt to auto-convert.",
         });
 
         this.editor.on('blur', this.props.onBlur);
+        this.editor.on('beforeChange', (e, change) => {
+            if (change.origin === "paste") {
+                if (this.state.pasted !== null) {
+                    change.cancel()
+                    e.doc.replaceRange(this.state.pasted, change.from, change.to)
+                }
+            }
+        })
+        this.editor.on('paste', (cm, e) => {
+            let html = e.clipboardData.getData('text/html');
+
+            let state = stateFromHTML(html)
+            if (state.hasText()) {
+                this.setState({ pasted: stateToMarkdown(state) })
+            } else {
+                this.setState({ pasted: null })
+            }
+        })
     }
 
     render = () => (
