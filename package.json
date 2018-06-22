@@ -33,7 +33,7 @@
   },
   "reactSnapshot": {
     "include": [
-      "/test"
+      "/test/"
     ]
   }
 }

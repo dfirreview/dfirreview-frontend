@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import {
     Container,
+    Icon,
+    Label,
     Segment,
     Tab,
     Table,
@@ -38,10 +40,14 @@ class MarkdownEditor extends React.PureComponent {
         this.editor.on('blur', this.props.onBlur);
     }
 
-    render = () => <textarea
-        ref={e => this.refEditor = e}
-        defaultValue={this.props.content}
-    />
+    render = () => (
+        <div>
+            <textarea
+                ref={e => this.refEditor = e}
+                defaultValue={this.props.content}
+            />
+        </div>
+    )
 }
 
 class MarkdownTest extends React.PureComponent {
@@ -63,6 +69,14 @@ class MarkdownTest extends React.PureComponent {
     editor = () => (
         <Tab.Pane attached='top'>
             <Container>
+                <Label
+                    as='a'
+                    href='https://guides.github.com/features/mastering-markdown/'
+                    target='_blank'
+                    attached='top'
+                >
+                    <Icon name='code' /> Markdown
+                </Label>
                 <MarkdownEditor content={this.state.markdown} onBlur={
                     (e) => {
                         this.setState({ markdown: e.getValue() })
@@ -74,6 +88,7 @@ class MarkdownTest extends React.PureComponent {
 
     preview = () => (
         <Tab.Pane attached='top'>
+            <Label attached='top'><Icon name='file alternate' />Preview</Label>
             <Markdown source={this.state.markdown} renderers={this.renderers} />
         </Tab.Pane>
     )
