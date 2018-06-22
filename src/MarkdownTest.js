@@ -34,7 +34,7 @@ class MarkdownEditor extends React.PureComponent {
             matchBrackets: true,
             lineWrapping: true,
             tabSize: 2,
-            placeholder: "This editor supports Github Flavored Markdown",
+            placeholder: "This editor supports Github Flavored Markdown.  Click the banner above for more details.",
         });
 
         this.editor.on('blur', this.props.onBlur);
