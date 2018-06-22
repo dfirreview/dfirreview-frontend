@@ -25,6 +25,14 @@ import Markdown from 'react-markdown';
 
 import breaks from 'remark-breaks';
 
+const placeholderText = `This editor supports Github Flavored Markdown.  Click the banner above for more details.
+    
+You can also paste in content and it will attempt to auto-convert.
+
+Known Issues:
+    - When pasting formatted content, lists and images are not rendered in-line, but at the bottom of the markdown
+`
+
 class MarkdownEditor extends React.PureComponent {
     static propTypes = {
         content: PropTypes.string,
@@ -41,7 +49,7 @@ class MarkdownEditor extends React.PureComponent {
             matchBrackets: true,
             lineWrapping: true,
             tabSize: 2,
-            placeholder: "This editor supports Github Flavored Markdown.  Click the banner above for more details.\n\nYou can also paste in content and it will attempt to auto-convert.",
+            placeholder: placeholderText,
         });
 
         this.editor.on('blur', this.props.onBlur);
