@@ -5,7 +5,8 @@
         "plugin:react/recommended"
     ],
     "env": {
-        "browser": true
+        "browser": true,
+        "amd": true
     },
     "globals": {
         "process": true

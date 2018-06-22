@@ -6,6 +6,7 @@ import 'semantic-ui-css/semantic.min.css';
 import Apply from "./Apply.js";
 import Donate from './Donate.js';
 import Home from './Home.js';
+import MarkdownTest from './MarkdownTest.js';
 
 
 import MainMenu from './MainMenu.js';
@@ -76,6 +77,7 @@ render(
                     <Route exact path="/" component={Home} />
                     <Route exact path="/apply" component={Apply} />
                     <Route exact path="/donate" component={Donate} />
+                    <Route exact path="/test" component={MarkdownTest} />
                     <Route component={NotFound} status={404} />
                 </Switch>
             </div>
