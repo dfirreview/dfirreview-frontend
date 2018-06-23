@@ -15,8 +15,7 @@ import 'codemirror/mode/gfm/gfm';
 import 'codemirror/addon/display/placeholder';
 import 'codemirror/lib/codemirror.css';
 
-import stateFromHTML from 'draft-js-import-html/lib/stateFromHTML';
-import stateToMarkdown from 'draft-js-export-markdown/lib/stateToMarkdown';
+import TurndownService from 'turndown';
 
 import './MarkdownTest.css';
 
@@ -30,14 +29,17 @@ const placeholderText = `This editor supports Github Flavored Markdown.  Click t
 You can also paste in content and it will attempt to auto-convert.
 
 Known Issues:
-    - When pasting formatted content, lists and images are not rendered in-line, but at the bottom of the markdown
-`
+    - Pasted website content that contains links might mess up spacing around the links.
+    - Documents pasted from Word might contain a weirdly escaped HTML comment at the top.
+`;
 
 class MarkdownEditor extends React.PureComponent {
     static propTypes = {
         content: PropTypes.string,
         onChange: PropTypes.func,
     }
+
+    htmlToMarkdown = new TurndownService();
 
     componentDidMount() {
         // code mirror setup
@@ -61,17 +63,17 @@ class MarkdownEditor extends React.PureComponent {
                     this.setState({ pasted: null })
                 }
             }
-        })
+        });
+
         this.editor.on('paste', (cm, e) => {
             let html = e.clipboardData.getData('text/html');
 
-            let state = stateFromHTML(html)
-            if (state.hasText()) {
-                this.setState({ pasted: stateToMarkdown(state) })
+            if (html === "") {
+                this.setState({ pasted: null });
             } else {
-                this.setState({ pasted: null })
+                this.setState({ pasted: this.htmlToMarkdown.turndown(html) });
             }
-        })
+        });
     }
 
     render = () => (
@@ -93,12 +95,10 @@ class MarkdownTest extends React.PureComponent {
         }
     }
 
-
     renderers = {
         root: (props) => (
             <Segment
                 vertical
-                textAlign='justified'
                 style={{ textAlign: 'justify', hyphens: 'none' }}
             >
                 {props.children}

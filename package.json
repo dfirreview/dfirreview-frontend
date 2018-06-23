@@ -4,9 +4,6 @@
   "private": true,
   "dependencies": {
     "codemirror": "^5.39.0",
-    "draft-js": "^0.10.5",
-    "draft-js-export-markdown": "^1.2.0",
-    "draft-js-import-html": "^1.2.1",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -16,7 +13,8 @@
     "react-sticky-box": "^0.6.2",
     "remark-breaks": "^1.0.0",
     "semantic-ui-css": "^2.3.2",
-    "semantic-ui-react": "^0.81.1"
+    "semantic-ui-react": "^0.81.1",
+    "turndown": "^4.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
