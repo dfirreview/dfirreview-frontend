@@ -78,9 +78,22 @@ class MarkdownEditor extends React.PureComponent {
     }
 
     Toolbar = () => {
-        const replace = (before, after = "", split = false) => {
+        const replace = (before = "", after = "", split = false) => {
             let sel = this.editor.getSelection()
             if (sel === "") {
+                let cursor = this.editor.getCursor()
+
+                if (split && cursor["ch"] !== 0) {
+                    this.editor.replaceSelection("\n")
+                    cursor["line"] += 1
+                    cursor["ch"] = before.length
+                } else {
+                    cursor["ch"] += before.length
+                }
+
+                this.editor.replaceSelection(before + after)
+                this.editor.focus()
+                this.editor.setCursor(cursor)
                 return
             }
 
@@ -98,8 +111,18 @@ class MarkdownEditor extends React.PureComponent {
 
         const replaceNumList = () => {
             let sel = this.editor.getSelection()
+
+            let cursor = this.editor.getCursor("start")
+
+            // Numbered lists require multiple line breaks to seperate
+            if (cursor["line"] !== 0 || cursor["ch"] !== 0) {
+                this.editor.replaceSelection("\n\n")
+                cursor["line"] += 2
+                cursor["ch"] = 0
+            }
+
             if (sel === "") {
-                return
+                return replace("1. ", "\n")
             }
 
             let items = sel.split('\n')
@@ -110,8 +133,7 @@ class MarkdownEditor extends React.PureComponent {
                 text += i + ". " + items[i - 1] + '\n'
             }
 
-            text = text.slice(0, -1)
-            this.editor.replaceSelection(text)
+            this.editor.replaceSelection(text + '\n')
         }
 
         return (
@@ -122,10 +144,10 @@ class MarkdownEditor extends React.PureComponent {
                     <Button icon='strikethrough' onClick={() => replace("~~", "~~")} />
                     <Button icon='quote left' onClick={() => replace("> ", "", true)} />
                     <Button icon='code' onClick={() => replace("```\n", "\n```")} />
-                    <Button icon='linkify' onClick={() => replace("[", "]()")} />
+                    <Button icon='linkify' onClick={() => replace("[", "](https://url)")} />
                     <Button icon='list ol' onClick={replaceNumList} />
                     <Button icon='list ul' onClick={() => replace("* ", "", true)} />
-                    <Button icon='heading' onClick={() => replace("# ")} />
+                    <Button icon='heading' onClick={() => replace("# ", "", true)} />
                 </Button.Group>
             </Segment>
         )
