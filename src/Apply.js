@@ -77,8 +77,8 @@ class Apply extends React.PureComponent {
                         />
                         <Form.Input
                             name='entry.1292862019'
-                            label='Orginization'
-                            placeholder='Orginization'
+                            label='Organization'
+                            placeholder='Organization'
                         />
                         <Form.TextArea
                             name='entry.1393849953'
