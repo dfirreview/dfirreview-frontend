@@ -84,14 +84,14 @@ class MarkdownEditor extends React.PureComponent {
                 let cursor = this.editor.getCursor()
 
                 if (split && cursor["ch"] !== 0) {
-                    this.editor.replaceSelection("\n")
+                    this.editor.replaceSelection("\n" + before + after)
                     cursor["line"] += 1
                     cursor["ch"] = before.length
                 } else {
+                    this.editor.replaceSelection(before + after)
                     cursor["ch"] += before.length
                 }
 
-                this.editor.replaceSelection(before + after)
                 this.editor.focus()
                 this.editor.setCursor(cursor)
                 return
@@ -140,7 +140,7 @@ class MarkdownEditor extends React.PureComponent {
             <Segment vertical basic textAlign='center' style={{ padding: '5px 0 0 0' }}>
                 <Button.Group icon size='mini' compact basic>
                     <Button icon='bold' onClick={() => replace("**", "**")} />
-                    <Button icon='italic' onClick={() => replace("_", "_")} />
+                    <Button icon='italic' onClick={() => replace("*", "*")} />
                     <Button icon='strikethrough' onClick={() => replace("~~", "~~")} />
                     <Button icon='quote left' onClick={() => replace("> ", "", true)} />
                     <Button icon='code' onClick={() => replace("```\n", "\n```")} />
