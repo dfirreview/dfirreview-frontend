@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
+    Button,
+    Grid,
     Icon,
     Image,
     Label,
     Segment,
     Table,
-    Grid,
 } from 'semantic-ui-react';
 
 import codemirror from 'codemirror';
@@ -76,12 +77,67 @@ class MarkdownEditor extends React.PureComponent {
         });
     }
 
+    Toolbar = () => {
+        const replace = (before, after = "", split = false) => {
+            let sel = this.editor.getSelection()
+            if (sel === "") {
+                return
+            }
+
+            if (split) {
+                let text = ""
+
+                sel.split('\n').forEach(line => text += before + line + after + "\n")
+                text = text.slice(0, -1)
+
+                this.editor.replaceSelection(text)
+            } else {
+                this.editor.replaceSelection(before + sel + after)
+            }
+        }
+
+        const replaceNumList = () => {
+            let sel = this.editor.getSelection()
+            if (sel === "") {
+                return
+            }
+
+            let items = sel.split('\n')
+
+            var text = ""
+
+            for (var i = 1; i <= items.length; i++) {
+                text += i + ". " + items[i - 1] + '\n'
+            }
+
+            text = text.slice(0, -1)
+            this.editor.replaceSelection(text)
+        }
+
+        return (
+            <Segment vertical basic textAlign='center' style={{ padding: '5px 0 0 0' }}>
+                <Button.Group icon size='mini' compact basic>
+                    <Button icon='bold' onClick={() => replace("**", "**")} />
+                    <Button icon='italic' onClick={() => replace("_", "_")} />
+                    <Button icon='strikethrough' onClick={() => replace("~~", "~~")} />
+                    <Button icon='quote left' onClick={() => replace("> ", "", true)} />
+                    <Button icon='code' onClick={() => replace("```\n", "\n```")} />
+                    <Button icon='linkify' onClick={() => replace("[", "]()")} />
+                    <Button icon='list ol' onClick={replaceNumList} />
+                    <Button icon='list ul' onClick={() => replace("* ", "", true)} />
+                    <Button icon='heading' onClick={() => replace("# ")} />
+                </Button.Group>
+            </Segment>
+        )
+    }
+
     render = () => (
         <div>
             <textarea
                 ref={e => this.refEditor = e}
                 defaultValue={this.props.content}
             />
+            <this.Toolbar />
         </div>
     )
 }
@@ -99,7 +155,7 @@ class MarkdownTest extends React.PureComponent {
         root: (props) => (
             <Segment
                 vertical
-                style={{ textAlign: 'justify', hyphens: 'none' }}
+                style={{ textAlign: 'justify', hyphens: 'manual' }}
             >
                 {props.children}
             </Segment>
