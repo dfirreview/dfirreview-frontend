@@ -16,9 +16,12 @@ import 'codemirror/mode/gfm/gfm';
 import 'codemirror/addon/display/placeholder';
 import 'codemirror/lib/codemirror.css';
 
+import Highlight from 'react-highlight'
+
 import TurndownService from 'turndown';
 
 import './MarkdownTest.css';
+import 'highlight.js/styles/github.css';
 
 import Markdown from 'react-markdown';
 
@@ -184,6 +187,7 @@ class MarkdownTest extends React.PureComponent {
         ),
         table: (props) => <Table celled>{props.children}</Table>,
         image: (props) => <Image as='a' href={props.src} src={props.src} target='_blank' />,
+        code: (props) => <Highlight className={props.language}>{props.value}</Highlight>,
     }
 
 
