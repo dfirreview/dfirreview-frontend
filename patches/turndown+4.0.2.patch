@@ -1,0 +1,78 @@
+patch-package
+--- a/node_modules/turndown/dist/turndown.js
++++ b/node_modules/turndown/dist/turndown.js
+@@ -600,7 +600,7 @@ function Node (node) {
+ 
+ function isBlank (node) {
+   return (
+-    ['A', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
++    ['A', 'SPAN', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
+     /^\s*$/i.test(node.textContent) &&
+     !isVoid(node) &&
+     !hasVoid(node)
+--- a/node_modules/turndown/lib/turndown.browser.cjs.js
++++ b/node_modules/turndown/lib/turndown.browser.cjs.js
+@@ -599,7 +599,7 @@ function Node (node) {
+ 
+ function isBlank (node) {
+   return (
+-    ['A', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
++    ['A', 'SPAN', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
+     /^\s*$/i.test(node.textContent) &&
+     !isVoid(node) &&
+     !hasVoid(node)
+--- a/node_modules/turndown/lib/turndown.browser.es.js
++++ b/node_modules/turndown/lib/turndown.browser.es.js
+@@ -597,7 +597,7 @@ function Node (node) {
+ 
+ function isBlank (node) {
+   return (
+-    ['A', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
++    ['A', 'SPAN', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
+     /^\s*$/i.test(node.textContent) &&
+     !isVoid(node) &&
+     !hasVoid(node)
+--- a/node_modules/turndown/lib/turndown.browser.umd.js
++++ b/node_modules/turndown/lib/turndown.browser.umd.js
+@@ -603,7 +603,7 @@ function Node (node) {
+ 
+ function isBlank (node) {
+   return (
+-    ['A', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
++    ['A', 'SPAN', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
+     /^\s*$/i.test(node.textContent) &&
+     !isVoid(node) &&
+     !hasVoid(node)
+--- a/node_modules/turndown/lib/turndown.cjs.js
++++ b/node_modules/turndown/lib/turndown.cjs.js
+@@ -575,7 +575,7 @@ function Node (node) {
+ 
+ function isBlank (node) {
+   return (
+-    ['A', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
++    ['A', 'SPAN', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
+     /^\s*$/i.test(node.textContent) &&
+     !isVoid(node) &&
+     !hasVoid(node)
+--- a/node_modules/turndown/lib/turndown.es.js
++++ b/node_modules/turndown/lib/turndown.es.js
+@@ -573,7 +573,7 @@ function Node (node) {
+ 
+ function isBlank (node) {
+   return (
+-    ['A', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
++    ['A', 'SPAN', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
+     /^\s*$/i.test(node.textContent) &&
+     !isVoid(node) &&
+     !hasVoid(node)
+--- a/node_modules/turndown/lib/turndown.umd.js
++++ b/node_modules/turndown/lib/turndown.umd.js
+@@ -579,7 +579,7 @@ function Node (node) {
+ 
+ function isBlank (node) {
+   return (
+-    ['A', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
++    ['A', 'SPAN', 'TH', 'TD'].indexOf(node.nodeName) === -1 &&
+     /^\s*$/i.test(node.textContent) &&
+     !isVoid(node) &&
+     !hasVoid(node)

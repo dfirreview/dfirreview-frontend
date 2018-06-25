@@ -30,11 +30,7 @@ import Sticky from 'react-sticky-box';
 
 const placeholderText = `This editor supports Github Flavored Markdown.  Click the banner above for more details.
     
-You can also paste in content and it will attempt to auto-convert.
-
-Known Issues:
-    - Pasted website content that contains links might mess up spacing around the links.
-`;
+You can also paste in content and it will attempt to auto-convert.`;
 
 class MarkdownEditor extends React.PureComponent {
     static propTypes = {
