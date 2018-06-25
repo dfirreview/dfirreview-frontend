@@ -34,7 +34,6 @@ You can also paste in content and it will attempt to auto-convert.
 
 Known Issues:
     - Pasted website content that contains links might mess up spacing around the links.
-    - Documents pasted from Word might contain a weirdly escaped HTML comment at the top.
 `;
 
 class MarkdownEditor extends React.PureComponent {
@@ -43,7 +42,11 @@ class MarkdownEditor extends React.PureComponent {
         onChange: PropTypes.func,
     }
 
-    htmlToMarkdown = new TurndownService();
+    constructor(props) {
+        super(props)
+        this.htmlToMarkdown = new TurndownService();
+        this.htmlToMarkdown.remove('style')
+    }
 
     componentDidMount() {
         // code mirror setup
@@ -75,7 +78,7 @@ class MarkdownEditor extends React.PureComponent {
             if (html === "") {
                 this.setState({ pasted: null });
             } else {
-                this.setState({ pasted: this.htmlToMarkdown.turndown(html) });
+                this.setState({ pasted: this.htmlToMarkdown.turndown(html).trim() });
             }
         });
     }
