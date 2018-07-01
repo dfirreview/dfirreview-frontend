@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 
 import {
     Button,
+    Container,
     Grid,
     Icon,
     Image,
     Label,
     Segment,
     Table,
+    List,
+    Accordion,
 } from 'semantic-ui-react';
 
 import codemirror from 'codemirror';
@@ -25,12 +28,97 @@ import 'highlight.js/styles/github.css';
 
 import Markdown from 'react-markdown';
 
+import DropZone from 'react-dropzone'
+
 import breaks from 'remark-breaks';
 import Sticky from 'react-sticky-box';
 
 const placeholderText = `This editor supports Github Flavored Markdown.  Click the banner above for more details.
     
 You can also paste in content and it will attempt to auto-convert.`;
+
+class ImageUploader extends React.Component {
+    static propTypes = {
+        onThumbnailClick: PropTypes.func,
+    }
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            thumbnails: [],
+            expanded: false,
+        }
+    }
+
+    handleDrop = (accepted, rejected) => {
+        rejected.forEach(
+            file => {
+                window.URL.revokeObjectURL(file.preview)
+            }
+        )
+
+        let thumbnails = []
+
+        accepted.forEach(
+            file => {
+                thumbnails.push(file)
+            }
+        )
+
+        this.setState(prev => {
+            prev.thumbnails = prev.thumbnails.concat(thumbnails)
+            return prev
+        })
+    }
+
+    render = () => (
+        <Accordion as={Segment} >
+            <Accordion.Title
+                as={Label}
+                active={this.state.expanded}
+                attached='top'
+                content="Image Uploads"
+                onClick={() => {
+                    this.setState(prev => {
+                        prev.expanded = !prev.expanded
+                        return prev
+                    })
+                }} />
+            <Accordion.Content as={List} active={this.state.expanded}>
+
+                {
+                    this.state.thumbnails.map(
+                        (thumbnail, key) => (
+                            <List.Item key={key}>
+                                <Image key={key} src={thumbnail.preview} bordered as='a'
+                                    onClick={() => {
+                                        if (this.props.onThumbnailClick) {
+                                            this.props.onThumbnailClick(this.state.thumbnails[key])
+                                        }
+                                    }} />
+                            </List.Item>
+                        )
+                    )
+                }
+
+                <List.Item>
+                    <DropZone style={{
+                        borderWidth: '2px',
+                        borderColor: 'rgb(102, 102, 102)',
+                        borderStyle: 'dashed',
+                        borderRadius: '5px',
+                    }} accept='image/*' onDrop={this.handleDrop}>
+                        <Container textAlign='center' style={{ fontSize: '1.2em' }}>
+                            <Icon name='picture' size='massive' disabled />
+                            <p> Click or Drag Image Here to Upload </p>
+                        </Container>
+                    </DropZone>
+                </List.Item>
+            </Accordion.Content>
+        </Accordion>
+    )
+}
 
 class MarkdownEditor extends React.PureComponent {
     static propTypes = {
@@ -40,8 +128,20 @@ class MarkdownEditor extends React.PureComponent {
 
     constructor(props) {
         super(props)
+
+        this.state = {
+            pasted: null,
+        }
+
         this.htmlToMarkdown = new TurndownService();
         this.htmlToMarkdown.remove('style')
+    }
+
+    updatePaste = (content) => {
+        this.setState((prev) => {
+            prev.pasted = content
+            return prev
+        })
     }
 
     componentDidMount() {
@@ -63,7 +163,7 @@ class MarkdownEditor extends React.PureComponent {
                 if (this.state.pasted !== null) {
                     change.cancel()
                     e.doc.replaceRange(this.state.pasted, change.from, change.to)
-                    this.setState({ pasted: null })
+                    this.setState({ pasted: null });
                 }
             }
         });
@@ -162,11 +262,14 @@ class MarkdownEditor extends React.PureComponent {
                 defaultValue={this.props.content}
             />
             <this.Toolbar />
+            <ImageUploader onThumbnailClick={thumbnail => {
+                this.editor.replaceSelection("![" + thumbnail.name + "](" + thumbnail.preview + ")")
+            }} />
         </div>
     )
 }
 
-class MarkdownTest extends React.PureComponent {
+class MarkdownTest extends React.Component {
     constructor(props) {
         super(props)
 
@@ -189,6 +292,15 @@ class MarkdownTest extends React.PureComponent {
         code: (props) => <Highlight className={props.language}>{props.value}</Highlight>,
     }
 
+    // debounce the updates to every 200ms
+    shouldComponentUpdate = () => {
+        if (this.timeout) {
+            clearTimeout(this.timeout)
+        }
+
+        this.timeout = setTimeout(() => this.forceUpdate(), 200)
+        return false
+    }
 
     editor = () => (
         <Sticky>
