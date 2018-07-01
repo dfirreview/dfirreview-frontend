@@ -72,10 +72,17 @@ class ImageUploader extends React.Component {
         })
     }
 
+    componentWillUnmount = () => {
+        this.state.thumbnails.forEach(
+            file => {
+                window.URL.revokeObjectURL(file.preview)
+            }
+        )
+    }
+
     render = () => (
-        <Accordion as={Segment} >
+        <Accordion as={Segment} vertical compact >
             <Accordion.Title
-                as={Label}
                 active={this.state.expanded}
                 attached='top'
                 content="Image Uploads"
