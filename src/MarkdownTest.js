@@ -81,7 +81,7 @@ class ImageUploader extends React.Component {
     }
 
     render = () => (
-        <Accordion as={Segment} vertical compact >
+        <Accordion as={Segment} vertical >
             <Accordion.Title
                 active={this.state.expanded}
                 attached='top'
